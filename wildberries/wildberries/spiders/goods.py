@@ -3,7 +3,7 @@ import re
 
 import scrapy
 
-from wildberries.items import WildberriesItem
+from ..items import WildberriesItem
 
 SUCCESS_CODES = [200, 201]
 
@@ -22,14 +22,17 @@ class GoodsSpider(scrapy.Spider):
     handle_httpstatus_list = [404]
     allowed_domains = ['www.wildberries.ru', 'wbxcatalog-ru.wildberries.ru', 'wbx-content-v2.wbstatic.net', 'card.wb.ru',
                        'product-order-qnt.wildberries.ru', 'basket-01.wb.ru']
-    ids = {158074064}
+
+    def __init__(self, id=None, wb_parser=None, *args, **kwargs):
+        super(GoodsSpider, self).__init__(*args, **kwargs)
+        self.id = id
+        self.wb_parser = wb_parser
 
     def start_requests(self):
-        for id_ in self.ids:
-            item = WildberriesItem()
-            item['id'] = id_
-            yield scrapy.Request(url=AJAX_REQUEST__GOOD_INFO.format(id_), callback=self.parse_good_info,
-                                 cb_kwargs={'item': item, 'id': id_})
+        item = WildberriesItem()
+        item['id'] = self.id
+        yield scrapy.Request(url=AJAX_REQUEST__GOOD_INFO.format(self.id), callback=self.parse_good_info,
+                             cb_kwargs={'item': item, 'id': self.id})
 
     # def parse_page(self, response, **kwargs):
     #     item = kwargs['item']
@@ -68,6 +71,8 @@ class GoodsSpider(scrapy.Spider):
                     item['qty'] += stock['qty']
             # yield scrapy.Request(url=AJAX_REQUEST_SELLERS.format(id_[:3], id_[:5], id_), callback=self.parse_sellers_info,
             #                      cb_kwargs={'item': item, 'id': id_})
+        if self.wb_parser:
+            self.wb_parser.result = item
         yield item
 
     # def parse_sellers_info(self, response, **kwargs):
