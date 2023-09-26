@@ -1,6 +1,11 @@
 name: Unit tests for Basic Class
 
 on:
+  push:
+    branches:
+      - develop
+      - main
+
   pull_request:
     branches:
       - develop
