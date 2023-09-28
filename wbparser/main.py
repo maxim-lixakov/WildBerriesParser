@@ -14,19 +14,22 @@ class WBparser:
     """A class used to parse data from Wildberries.
     Pass several identifiers/urls to one WBparser object to make sure that Scrapy will work asynchronously.
 
-    Example:
-    .. code-block:: python
-        parser = WBparser()
-        parser.parse_data(ids=[<product_id_1>])
-        parser.save_data()
+    Examples:
 
-    Example:
-    .. code:: python
-        parser = WBparser()
-        parser.parse_data(urls=[<url_1>, <url_2>, <url_3>,], ids=[<product_id_1>, <product_id_2>,])
-        parser.save_data(file_format='json', file_name='rareProducts')
-        print(parser.result)
-        print(parser.name)
+        .. code:: python
+
+            parser = WBparser()
+            parser.parse_data(ids=[<product_id_1>])
+            parser.save_data()
+
+
+        .. code:: python
+
+            parser = WBparser()
+            parser.parse_data(urls=[<url_1>, <url_2>, <url_3>,], ids=[<product_id_1>, <product_id_2>,])
+            parser.save_data(file_format='json', file_name='rareProducts')
+            print(parser.result)
+            print(parser.name)
     """
 
     ids: Union[None, list[int], list[str]] = None
