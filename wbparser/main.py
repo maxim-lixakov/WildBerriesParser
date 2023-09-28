@@ -1,7 +1,7 @@
 import csv
 import json
 from dataclasses import dataclass
-from typing import Union
+from typing import List, Union
 
 from scrapy.crawler import CrawlerRunner
 from twisted.internet import reactor
@@ -32,9 +32,9 @@ class WBparser:
             print(parser.name)
     """
 
-    ids: Union[None, list[int], list[str]] = None
-    urls: Union[None, list[str]] = None
-    result: Union[None, list[dict]] = None
+    ids: Union[None, List[int], List[str]] = None
+    urls: Union[None, List[str]] = None
+    result: Union[None, List[dict]] = None
 
     def _crawl(self, runner):
         deferred = runner.crawl(GoodsSpider, wb_parser=self)
@@ -43,9 +43,9 @@ class WBparser:
 
     def parse_data(
             self,
-            urls: Union[None, list[str]] = None,
-            ids: Union[None, list[int], list[str]] = None
-    ) -> list[dict]:
+            urls: Union[None, List[str]] = None,
+            ids: Union[None, List[int], List[str]] = None
+    ) -> List[dict]:
         """Parses the data for the products identifiers or/and products pages. The data goes to the result attribute.
 
         :param urls: Product pages to parse, defaults to None
@@ -91,52 +91,52 @@ class WBparser:
                     dict_writer.writerows(self.result)
 
     @property
-    def name(self) -> list[str]:
+    def name(self) -> List[str]:
         """Accesses the product name property.
 
         :return: Product names of parsed items
-        :rtype: list[str]
+        :rtype: List[str]
         """
         return [dct.get('name') for dct in self.result]
 
     @property
-    def brand(self) -> list[str]:
+    def brand(self) -> List[str]:
         """Accesses the brand property.
 
         :return: Brands of parsed items
-        :rtype: list[str]
+        :rtype: List[str]
         """
         return [dct.get('brand') for dct in self.result]
 
     @property
-    def priceU(self) -> list[int]:
+    def priceU(self) -> List[int]:
         """Accesses the product price property.
 
         :return: Prices of parsed items
-        :rtype: list[int]
+        :rtype: List[int]
         """
         return [dct.get('priceU') for dct in self.result]
 
     @property
-    def salePriceU(self) -> list[int]:
+    def salePriceU(self) -> List[int]:
         """Accesses the sale price property.
 
         :return: Sale prices of parsed items
-        :rtype: list[int]
+        :rtype: List[int]
         """
         return [dct.get('salePriceU') for dct in self.result]
 
     @property
-    def picsAmt(self) -> list[int]:
+    def picsAmt(self) -> List[int]:
         """Accesses the pictures amount property.
 
         :return: Picture amounts of parsed items
-        :rtype: list[int]
+        :rtype: List[int]
         """
         return [dct.get('picsAmt') for dct in self.result]
 
     @property
-    def colors(self) -> list[list[dict]]:
+    def colors(self) -> List[List[dict]]:
         """Accesses the color property.
 
         :return: Colors of parsed items
@@ -145,7 +145,7 @@ class WBparser:
         return [dct.get('colors') for dct in self.result]
 
     @property
-    def sizes(self) -> list[list[str]]:
+    def sizes(self) -> List[List[str]]:
         """Accesses the size property.
 
         :return: Size values of parsed items
@@ -154,7 +154,7 @@ class WBparser:
         return [dct.get('sizes') for dct in self.result]
 
     @property
-    def qty(self) -> list[int]:
+    def qty(self) -> List[int]:
         """Accesses the qty property.
 
         :return: Amount of available products for each parsed item
@@ -163,28 +163,28 @@ class WBparser:
         return [dct.get('qty') for dct in self.result]
 
     @property
-    def supplierId(self) -> list[str]:
+    def supplierId(self) -> List[str]:
         """Accesses the supplier identifier property.
 
         :return: Supplier identifiers of parsed items
-        :rtype: list[str]
+        :rtype: List[str]
         """
         return [dct.get('supplierId') for dct in self.result]
 
     @property
-    def rating(self) -> list[float]:
+    def rating(self) -> List[float]:
         """Accesses the rating property.
 
         :return: Rating values of parsed items
-        :rtype: list[float]
+        :rtype: List[float]
         """
         return [dct.get('rating') for dct in self.result]
 
     @property
-    def feedbacksAmt(self) -> list[int]:
+    def feedbacksAmt(self) -> List[int]:
         """Accesses the number of feedbacks property.
 
         :return: Number of feedbacks of parsed items
-        :rtype: list[int]
+        :rtype: List[int]
         """
         return [dct.get('feedbacksAmt') for dct in self.result]
