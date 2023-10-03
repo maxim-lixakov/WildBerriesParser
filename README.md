@@ -1,2 +1,1 @@
-Hello world!
-This is a fatal eRRoP
+`pip install wbparser`
